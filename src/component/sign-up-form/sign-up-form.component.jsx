@@ -1,8 +1,7 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 
 import FormInput from "../form-input/form-input.component.jsx";
 import Button from "../button/button.component.jsx";
-import { UserContext } from "../../context/user.context.jsx";
 
 import {
   createAuthUserWithEmailAndPassword,
@@ -19,7 +18,6 @@ const defaultFormFields = {
 };
 
 const SignUpForm = () => {
-  const { setCurrentUser } = useContext(UserContext);
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
@@ -40,7 +38,7 @@ const SignUpForm = () => {
         password
       );
 
-      setCurrentUser(user);
+      // setCurrentUser(user);
       await CreateUserDocumentFromAuth(user, { displayName });
     } catch (err) {
       console.log(err);
@@ -91,7 +89,7 @@ const SignUpForm = () => {
           value={confirmPassword}
         />
 
-        <Button type="submit" Children={"Sign Up"} />
+        <Button type="submit">Sign Up</Button>
       </form>
     </div>
   );

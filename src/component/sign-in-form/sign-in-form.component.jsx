@@ -1,14 +1,12 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 
 import {
-  CreateUserDocumentFromAuth,
   signInwithGooglePopup,
   signInUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase.util.js";
 
 import FormInput from "../form-input/form-input.component.jsx";
 import Button from "../button/button.component.jsx";
-import { UserContext } from "../../context/user.context";
 
 import "./sign-in-form-style.scss";
 
@@ -26,13 +24,12 @@ const SignInForm = () => {
     setFormFields({ ...formFields, [name]: value });
   };
 
-  const { setCurrentUser } = useContext(UserContext);
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const { user } = await signInUserWithEmailAndPassword(email, password);
-      setCurrentUser(user);
+      await signInUserWithEmailAndPassword(email, password);
+      // const { user } = await signInUserWithEmailAndPassword(email, password);
     } catch (err) {
       if (err.code === "auth/user-not-found") {
         return alert("User dosen't exist! Create an account..");
@@ -44,9 +41,11 @@ const SignInForm = () => {
   };
 
   const logGooleUser = async () => {
-    const { user } = await signInwithGooglePopup();
-    setCurrentUser(user);
-    await CreateUserDocumentFromAuth(user);
+    try {
+      await signInwithGooglePopup();
+    } catch (err) {
+      console.log("getting error");
+    }
   };
 
   return (
@@ -71,13 +70,10 @@ const SignInForm = () => {
           value={password}
         />
         <div className="buttons-container">
-          <Button type="submit" Children={"Sign In"} />
-          <Button
-            type="button"
-            onClick={logGooleUser}
-            buttonType="google"
-            Children={"Google sign in"}
-          />
+          <Button type="submit">Sign In</Button>
+          <Button type="button" onClick={logGooleUser} buttonType="google">
+            Google sign in
+          </Button>
         </div>
       </form>
     </div>
