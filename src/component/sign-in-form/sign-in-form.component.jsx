@@ -44,7 +44,7 @@ const SignInForm = () => {
     try {
       await signInwithGooglePopup();
     } catch (err) {
-      console.log("getting error");
+      console.log("getting error in signinForm page");
     }
   };
 
