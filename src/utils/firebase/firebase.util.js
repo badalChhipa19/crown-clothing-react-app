@@ -38,6 +38,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const fireBase = initializeApp(firebaseConfig);
 
+//!  Authontation provides by google
 const provider = new GoogleAuthProvider();
 
 provider.setCustomParameters({
@@ -48,7 +49,6 @@ export const auth = getAuth();
 export const signInwithGooglePopup = () => signInWithPopup(auth, provider);
 
 //! Storage
-
 const db = getFirestore();
 
 export const addCollectionAndDocuments = async (collectionKey, ObjectToAdd) => {
