@@ -14,6 +14,7 @@ import { CategoriesTitle, CategoryConatiner } from "./category.style";
 const Category = () => {
   const { category } = useParams();
   const categoriesMap = useSelector(selectCategoriesMap);
+  const categoriesLoading = useSelector(selectIsLoading);
   const [products, setProducts] = useState(categoriesMap[category]);
 
   useEffect(() => {
@@ -23,7 +24,7 @@ const Category = () => {
   return (
     <>
       <CategoriesTitle>{category.toUpperCase()}</CategoriesTitle>
-      {selectIsLoading ? (
+      {categoriesLoading ? (
         <Spinner />
       ) : (
         <CategoryConatiner>
