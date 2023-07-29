@@ -7,7 +7,7 @@ import Navigation from "./router/navigation/navigation.component";
 import Authentication from "./router/authentication/authentication.component";
 import Shop from "./router/shop/shop.component";
 import CheckOut from "./router/checkout/checkout.component";
-import { setCurrentUser } from "./store/user/user.action";
+import { setCurrentUser } from "./store/user/user.reducer";
 import {
   OnAuthStateChangedListner,
   CreateUserDocumentFromAuth,
@@ -21,7 +21,7 @@ const App = () => {
       if (user) {
         CreateUserDocumentFromAuth(user);
       }
-
+      console.log(setCurrentUser(user));
       dispatch(setCurrentUser(user));
     });
 
