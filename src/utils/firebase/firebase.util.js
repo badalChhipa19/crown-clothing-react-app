@@ -21,6 +21,7 @@ import {
   query,
   getDocs,
 } from "firebase/firestore";
+import { unmountComponentAtNode } from "react-dom";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -93,6 +94,7 @@ export const CreateUserDocumentFromAuth = async (
       console.log("error creating the user", err.message);
     }
   }
+  return userSnapshot;
 };
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
@@ -110,3 +112,16 @@ export const SignOutUser = async () => await signOut(auth);
 
 export const OnAuthStateChangedListner = (callBack) =>
   onAuthStateChanged(auth, callBack);
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        unsubscribe();
+        resolve(userAuth);
+      },
+      reject
+    );
+  });
+};

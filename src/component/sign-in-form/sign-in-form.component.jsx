@@ -1,14 +1,14 @@
+import { useDispatch } from "react-redux";
 import { useState } from "react";
-
-import {
-  signInwithGooglePopup,
-  signInUserWithEmailAndPassword,
-} from "../../utils/firebase/firebase.util.js";
 
 import FormInput from "../form-input/form-input.component.jsx";
 import Button, { BUTTON_TYPE_CLASS } from "../button/button.component.jsx";
+import {
+  emailSignInStart,
+  googleSignInStart,
+} from "../../store/user/user.action.js";
 
-import { SignUpContainer, H2, ButtonContainer } from "./sign-in-form-style";
+import { SignUpContainer, H2, ButtonContainer } from "./sign-in-form.style.jsx";
 
 const defaultFormFields = {
   email: "",
@@ -16,6 +16,7 @@ const defaultFormFields = {
 };
 
 const SignInForm = () => {
+  const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
@@ -26,23 +27,13 @@ const SignInForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    try {
-      await signInUserWithEmailAndPassword(email, password);
-      // const { user } = await signInUserWithEmailAndPassword(email, password);
-    } catch (err) {
-      if (err.code === "auth/user-not-found") {
-        return alert("User dosen't exist! Create an account..");
-      }
-      if (err.code === "auth/wrong-password") {
-        return alert("Password dosen't match! Try Again..");
-      }
-    }
+    console.log(email, password);
+    dispatch(emailSignInStart(email, password));
   };
 
   const logGooleUser = async () => {
+    dispatch(googleSignInStart());
     try {
-      await signInwithGooglePopup();
     } catch (err) {
       console.log("getting error in signinForm page");
     }
