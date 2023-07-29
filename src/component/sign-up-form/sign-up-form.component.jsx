@@ -29,7 +29,6 @@ const SignUpForm = () => {
     if (password !== confirmPassword) {
       return alert("Password and confirm password are not same");
     }
-    console.log(email, password, displayName);
     dispatch(signUpStart(email, password, displayName));
   };
 

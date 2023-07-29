@@ -21,7 +21,6 @@ import {
 //! Sign In handlers
 export function* getSnapShotFromUserAuth(userAuth, additionalDetails) {
   try {
-    console.log(userAuth, additionalDetails);
     const userSnapshot = yield call(
       CreateUserDocumentFromAuth,
       userAuth,
@@ -48,8 +47,6 @@ export function* signInAfterSignUp({
   payload: { userAuth, additionalDetails },
 }) {
   try {
-    console.log("🚫🚫🚫🚫🚫🚫🚫 In signInAfterSignUp");
-    console.log(userAuth, additionalDetails);
     yield call(getSnapShotFromUserAuth, userAuth, additionalDetails);
   } catch (error) {
     yield put(signUpFailed(error));
@@ -58,14 +55,12 @@ export function* signInAfterSignUp({
 
 export function* signUp({ payload: { email, password, displayName } }) {
   try {
-    console.log("🚫🚫🚫🚫🚫🚫🚫 In signUp");
     const { user } = yield call(
       createAuthUserWithEmailAndPassword,
       email,
       password
     );
 
-    console.log("🚫🚫🚫 ===>", user, password, email, displayName);
     yield put(signUpSuccess(user, { displayName }));
   } catch (error) {
     yield put(signUpFailed(error));

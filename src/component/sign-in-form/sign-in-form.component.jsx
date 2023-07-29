@@ -27,7 +27,6 @@ const SignInForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(email, password);
     dispatch(emailSignInStart(email, password));
   };
 
@@ -35,7 +34,7 @@ const SignInForm = () => {
     dispatch(googleSignInStart());
     try {
     } catch (err) {
-      console.log("getting error in signinForm page");
+      console.error("getting error in signinForm page");
     }
   };
 
